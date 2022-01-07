@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/creditease/Downloads/工作资料/dba_to_dwd建表转换工具/dba_to_dwd.ui'
+# Form implementation generated from reading ui file '/Users/creditease/Downloads/工作资料/dba_to_dwd_tools/dba_to_dwd.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
         self.label_author = QtWidgets.QLabel(self.centralwidget)
-        self.label_author.setGeometry(QtCore.QRect(445, 470, 201, 16))
+        self.label_author.setGeometry(QtCore.QRect(530, 470, 111, 16))
         self.label_author.setStyleSheet("color:gray")
         self.label_author.setObjectName("label_author")
         self.plainTextEdit_dba = QtWidgets.QPlainTextEdit(self.centralwidget)
@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
         self.pushButton_transfer.setText(_translate("MainWindow", ">>"))
         self.pushButton_save.setText(_translate("MainWindow", "save"))
         self.label_savePath.setText(_translate("MainWindow", "保存路径"))
-        self.label_author.setText(_translate("MainWindow", "Author: zenanhe@creditease.cn"))
+        self.label_author.setText(_translate("MainWindow", "Author: zenanhe"))
         self.label_sysName.setText(_translate("MainWindow", "系统名称"))
         self.label_databaseType.setText(_translate("MainWindow", "源库类型"))
         self.radioButton_mysql.setText(_translate("MainWindow", "MySQL"))
