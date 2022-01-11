@@ -33,6 +33,9 @@ def mysql_trans_to_dwd(text, sys_name):
                 res=re.match("tinyint\(\d+\)",word)
                 if res!=None:
                     replace_dict[res.group()]='int'
+                res=re.match("bigint\(\d+\)",word)
+                if res!=None:
+                    replace_dict[res.group()]='int'
                 res=re.match("varchar\(\d+\)",word)
                 if res!=None:
                     replace_dict[res.group()]='string'
@@ -59,21 +62,25 @@ def mysql_trans_to_dwd(text, sys_name):
         if content_list.index(line)==0:
             dwd_tb_name='dwd_'+sys_name+'_'+words[-2]+'_df'
             tmp_line=tmp_line.replace(words[-2], dwd_tb_name)
-        # 倒数第二行判定是否有主键定义
-        if content_list.index(line)==list_len-2:
+        # 判定是否有主键定义
+        if content_list.index(line)>0 and content_list.index(line)<list_len-1:
             # 发现主键定义，跳过当前行
-            if tmp_line.find('PRIMARY')>=0:
+            if tmp_line.find('PRIMARY')>=0 or tmp_line.find('KEY')>=0:
                 continue
         # 末行提纯表注释
         if content_list.index(line)==list_len-1:
-            tmp_line=') '+words[-1]
-            tmp_line=tmp_line.replace('=', ' ')
+            if tmp_line.find('COMMENT')>=0:
+                tmp_line=') '+words[-1]
+                tmp_line=tmp_line.replace('=', ' ')
+            else:
+                tmp_line=')'
         # 解析后的行文本添加进新的list
         trans_list.append(tmp_line)
     
     # 添加etl_time并且修正最后一个字段结尾带逗号的问题
-    trans_list.insert(1,'  etl_time string comment \'etl_time\',')
-    trans_list[len(trans_list)-2]=trans_list[len(trans_list)-2].replace(',','')
+    # trans_list.insert(1,'  etl_time string comment \'etl_time\',')
+    # trans_list[len(trans_list)-2]=trans_list[len(trans_list)-2].replace(',','')
+    trans_list.insert(len(trans_list)-1,'  etl_time string COMMENT \'etl_time\'')
     # 添加分区部分
     trans_list.append('PARTITIONED BY(')
     trans_list.append(' dt string')
