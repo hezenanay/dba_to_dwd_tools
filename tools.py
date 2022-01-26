@@ -19,9 +19,19 @@ def mysql_trans_to_dwd(text, sys_name):
         # 通用替换
         tmp_line=line
         tmp_line=tmp_line.replace('`', '')
+        tmp_line=tmp_line.replace('CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT \'\' ', '')
+        tmp_line=tmp_line.replace('NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ', '')
+        tmp_line=tmp_line.replace('NULL DEFAULT CURRENT_TIMESTAMP ', '')
+        tmp_line=tmp_line.replace(' NOT ON UPDATE CURRENT_TIMESTAMP', '')
+        tmp_line=tmp_line.replace(' DEFAULT CURRENT_TIMESTAMP ', '')
         tmp_line=tmp_line.replace('NOT NULL AUTO_INCREMENT ', '')
         tmp_line=tmp_line.replace('NOT NULL ', '')
+        tmp_line=tmp_line.replace('NOT NULL', '')
         tmp_line=tmp_line.replace('DEFAULT NULL ', '')
+        tmp_line=tmp_line.replace(' DEFAULT NULL', '')
+        tmp_line=tmp_line.replace(' AUTO_INCREMENT', '')
+        tmp_line=tmp_line.replace(' NULL', '')
+        
         # 精准替换数据类型
         replace_dict={}
         words=tmp_line.split(' ')
@@ -35,7 +45,7 @@ def mysql_trans_to_dwd(text, sys_name):
                     replace_dict[res.group()]='int'
                 res=re.match("bigint\(\d+\)",word)
                 if res!=None:
-                    replace_dict[res.group()]='int'
+                    replace_dict[res.group()]='bigint'
                 res=re.match("varchar\(\d+\)",word)
                 if res!=None:
                     replace_dict[res.group()]='string'
@@ -46,6 +56,15 @@ def mysql_trans_to_dwd(text, sys_name):
                 if res!=None:
                     replace_dict[res.group()]='string'
                 res=re.match("timestamp",word)
+                if res!=None:
+                    replace_dict[res.group()]='string'
+                res=re.match("tinytext",word)
+                if res!=None:
+                    replace_dict[res.group()]='string'
+                res=re.match("text",word)
+                if res!=None:
+                    replace_dict[res.group()]='string'
+                res=re.match("json",word)
                 if res!=None:
                     replace_dict[res.group()]='string'
                 res=re.match("decimal\(\d+,\d+\)",word)
