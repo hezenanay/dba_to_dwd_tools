@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/Users/creditease/Downloads/工作资料/dba_to_dwd_tools/dba_to_dwd.ui'
+# Form implementation generated from reading ui file '/Users/xxx/Downloads/工作资料/dba_to_dwd_tools/dba_to_dwd.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
